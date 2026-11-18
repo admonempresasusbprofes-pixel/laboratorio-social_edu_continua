@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lab de Redes: crea tu contenido</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f2ef;color:#141414;font:17px/1.45 system-ui,Arial,sans-serif}
+button{font:inherit;cursor:pointer}
+#app{max-width:560px;margin:auto;min-height:100vh;background:#fbfaf9;padding-bottom:30px}
+.bar{position:sticky;top:0;z-index:5;color:#fff;background:#141414;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bar b{font-size:15px;letter-spacing:.3px}
+.bar button{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:20px;padding:6px 12px;font-size:14px}
+.in{padding:16px 15px}
+h1{font-size:31px;line-height:1.1;margin:8px 0 12px;letter-spacing:-.5px}
+h2{font-size:24px;line-height:1.15;margin:4px 0 8px;letter-spacing:-.3px}
+p{margin:0 0 12px}
+.sub{color:#555;font-size:16px}
+.tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#c43c00}
+.hero{background:#ffcd6c;border-radius:18px;padding:20px;margin:6px 0 14px;position:relative;overflow:hidden}
+.hero:after{content:'';position:absolute;right:-24px;bottom:-24px;width:110px;height:110px;border-radius:50%;background:#ff58ae;opacity:.85}
+.hero:before{content:'';position:absolute;right:62px;top:-18px;width:44px;height:44px;border-radius:50%;background:#0086fc}
+.big{display:block;width:100%;border:0;border-radius:12px;padding:15px;font-weight:800;background:#141414;color:#fff;margin:8px 0;text-align:center;text-decoration:none}
+.big.g{background:#0a7d3b}.big.l{background:#e8e5e1;color:#141414}
+label{display:block;font-weight:700;margin:14px 0 6px}
+input,textarea{width:100%;font:inherit;padding:12px;border:2px solid #cfcac4;border-radius:10px;background:#fff;color:#141414}
+textarea{min-height:84px}
+input:focus,textarea:focus{outline:none;border-color:#141414}
+.chips{margin-top:7px}
+.chip{display:inline-block;border:1px dashed #999;background:#fff;border-radius:16px;padding:6px 11px;margin:0 6px 6px 0;font-size:14px;color:#333;text-align:left}
+.picks button{display:block;width:100%;text-align:left;background:#fff;border:2px solid #d6d1cb;border-radius:12px;padding:11px 13px;margin:7px 0;color:#141414;font-size:16px}
+.picks button.on{border-color:#141414;background:#141414;color:#fff}
+.picks button small{display:block;font-size:13px;opacity:.75}
+.checks button:before{content:'';display:inline-block;width:16px;height:16px;border:2px solid currentColor;border-radius:4px;margin-right:9px;vertical-align:-2px}
+.checks button.on:before{background:#7fe3a8;border-color:#7fe3a8}
+.fb{border-radius:10px;padding:11px 13px;margin:8px 0;font-size:15px}
+.fb.ok{background:#dff6e8}.fb.no{background:#ffe3de}
+.tip{background:#fff;border-left:5px solid #ffcd6c;border-radius:8px;padding:11px 13px;font-size:15px;margin:10px 0}
+.tip b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8a6200}
+.cards{display:grid;gap:11px}
+.net{display:block;width:100%;text-align:left;border:0;border-radius:16px;padding:17px;color:#fff;position:relative}
+.net strong{font-size:22px;display:block}
+.net span{font-size:15px;opacity:.95}
+.net em{position:absolute;right:13px;top:13px;font-style:normal;font-size:12px;background:rgba(0,0,0,.28);padding:3px 9px;border-radius:10px}
+.ig{background:linear-gradient(135deg,#f9b23c,#ee2a7b 55%,#8a3ab9)}
+.tt{background:#111;box-shadow:inset 5px 0 0 #25f4ee,inset -5px 0 0 #fe2c55}
+.fbk{background:#1877f2}
+.wa{background:#0b8f4a}
+.dots{display:flex;gap:6px;margin:8px 0 2px}
+.dots i{flex:1;height:6px;border-radius:4px;background:#e2ded9}
+.dots i.on{background:#141414}.dots i.ok{background:#22b866}
+.secprev{margin-top:20px;border-top:2px dashed #d8d3cd;padding-top:12px}
+.secprev .tag{color:#666}
+/* telefono simulado */
+.ph{max-width:285px;margin:10px auto;border:7px solid #141414;border-radius:28px;background:#fff;overflow:hidden;font-size:13px;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.ph .top{padding:8px 11px;font-weight:700;border-bottom:1px solid #eee;display:flex;justify-content:space-between}
+.av{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px;flex:none;text-transform:uppercase}
+.row{display:flex;align-items:center;gap:10px;padding:10px 11px}
+.stats{display:flex;flex:1;justify-content:space-around;text-align:center;font-size:12px}
+.stats b{display:block;font-size:14px}
+.bio{padding:0 11px 9px}
+.btns{display:flex;gap:6px;padding:0 11px 10px}
+.btns span{flex:1;background:#efefef;border-radius:7px;text-align:center;padding:6px;font-weight:700;font-size:12px}
+.btns span.a{background:#0095f6;color:#fff}
+.gr{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.gr i{display:block;height:70px;background:#eadfd6}.gr i:nth-child(2n){background:#d9e9e5}.gr i:nth-child(3n){background:#f3d7e5}
+.lk{color:#00376b;font-weight:600}
+.story{height:430px;position:relative;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px}
+.story .t{font-size:21px;font-weight:800;line-height:1.2;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+.story .hd{position:absolute;top:10px;left:10px;right:10px;font-size:12px;text-align:left}
+.story .hd:before{content:'';display:block;height:3px;background:rgba(255,255,255,.85);border-radius:3px;margin-bottom:7px}
+.stk{margin-top:18px;background:#fff;color:#141414;border-radius:12px;padding:9px 13px;font-weight:700;font-size:14px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.stk.poll{display:flex;gap:6px}.stk.poll span{background:#f1f1f1;border-radius:8px;padding:6px 14px}
+.sb{display:flex;gap:6px;padding:10px}
+.sb div{flex:1;border-radius:9px;padding:8px;background:#f4f2ef;font-size:12px;min-height:118px}
+.sb div b{display:block;font-size:11px;color:#c43c00;margin-bottom:4px}
+.post .img{height:210px;display:flex;align-items:center;justify-content:center;color:#7a6f66;font-size:13px;background:repeating-linear-gradient(45deg,#f0e6dd,#f0e6dd 12px,#ebe0d6 12px,#ebe0d6 24px);text-align:center;padding:16px}
+.post .cap{padding:9px 11px}
+.hash{color:#00376b}
+.tk{height:440px;background:linear-gradient(#2b2b2b,#0d0d0d);color:#fff;position:relative;padding:14px}
+.tk .ov{position:absolute;top:110px;left:14px;right:60px;font-size:20px;font-weight:800;line-height:1.2;background:rgba(0,0,0,.35);padding:8px;border-radius:6px}
+.tk .side{position:absolute;right:10px;bottom:90px;display:flex;flex-direction:column;gap:14px;align-items:center;font-size:11px}
+.tk .side i{display:block;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.22)}
+.tk .bt{position:absolute;left:14px;right:58px;bottom:16px;font-size:13px}
+.tk .snd{margin-top:6px;font-size:12px;opacity:.85}
+.fbtop{background:#1877f2;color:#fff}
+.mk .img{height:170px}
+.mk .pr{font-size:18px;font-weight:800;padding:8px 11px 0}
+.fbp{padding:10px 11px}
+.fbp .rx{display:flex;justify-content:space-around;border-top:1px solid #e5e5e5;margin-top:9px;padding-top:7px;color:#65676b;font-weight:700;font-size:12px}
+.cm{background:#f0f2f5;border-radius:14px;padding:7px 10px;margin:6px 11px;display:inline-block;max-width:85%}
+.cm.me{margin-left:30px;background:#e7f0fd}
+.watop{background:#075e54;color:#fff}
+.chat{background:#ece5dd;padding:10px;min-height:250px;display:flex;flex-direction:column;gap:7px}
+.bub{background:#fff;border-radius:9px;padding:7px 9px;max-width:85%;align-self:flex-start}
+.bub.me{background:#dcf8c6;align-self:flex-end}
+.qr{display:flex;flex-wrap:wrap;gap:5px}
+.qr span{background:#fff;border:1px solid #128c7e;color:#128c7e;border-radius:12px;padding:3px 8px;font-size:12px}
+.cat{display:flex;gap:10px;padding:11px;border-bottom:1px solid #eee}
+.cat .img{width:80px;height:80px;border-radius:8px;flex:none;background:#d9e9e5}
+.est{height:420px;background:#128c7e;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-size:22px;font-weight:800;position:relative}
+.est small{position:absolute;bottom:14px;left:0;right:0;font-size:12px;font-weight:400}
+.plan{white-space:pre-wrap;background:#fff;border:2px solid #141414;border-radius:12px;padding:14px;font-size:15px}
+.reto{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e3dfda}
+.reto div{display:flex;gap:10px;padding:9px 12px;border-bottom:1px solid #eee;font-size:15px}
+.reto b{width:28px;flex:none;color:#c43c00}
+.small{font-size:13px;color:#777}
+</style>
+</head>
+<body>
+<div id="app"><div class="in"><h1>Lab de Redes</h1><p>Cargando…</p></div></div>
+<script>
+var K='labRedes_v2',S;
+try{S=JSON.parse(localStorage.getItem(K))}catch(x){}
+if(!S||!S.g)S={g:{},v:{},done:{},view:'home'};
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(x){}}
+function e(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function G(k,d){var x=(S.g[k]||'').trim();return x||d}
+function P(){return G('prod','tu producto')}
+function Z(){return G('zona','tu barrio')}
+function N(){return G('nombre','Mi negocio')}
+function Q(){return G('quien','tus clientes')}
+function slug(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'')}
+function nl(s){return e(s).replace(/\n/g,'<br>')}
+
+/* ============ CONTENIDO DE LAS RUTAS ============ */
+var R={
+ig:{n:'Instagram',cls:'ig',col:'#ee2a7b',d:'Muestra tu trabajo con fotos, historias y videos cortos.',
+reto:['Arregla tu perfil y pon una foto donde se te vea la cara o el producto.','Sube 3 historias que muestren cómo trabajas.','Publica tu primer post con el texto que armaste hoy.','Graba tu reel de 15 segundos.','Haz una historia con encuesta y pregunta qué prefieren.','Responde todos los mensajes y comentarios.','Fíjate qué gustó más y haz otro parecido.'],
+m:[
+{t:'Un perfil que da confianza',why:'Antes de comprarte, la gente mira tu perfil. En 3 segundos tiene que entender qué haces, dónde y cómo te pide.',
+f:[{id:'user',l:'Nombre de usuario',t:'text',ph:'Ej. sabores.derosa',sug:function(){return[slug(N())+'.'+slug(Z()).slice(0,8),slug(P()).slice(0,12)+'.'+slug(Z()).slice(0,8)]}},
+{id:'b1',l:'Línea 1: ¿qué haces?',t:'text',sug:function(){return[P()+' hechos a mano',P()+' con cariño y buen precio']}},
+{id:'b2',l:'Línea 2: ¿dónde y cuándo?',t:'text',sug:function(){return[Z()+' · todos los días',Z()+' · lunes a sábado']}},
+{id:'b3',l:'Línea 3: ¿cómo te piden?',t:'pick',o:['Pide por WhatsApp','Escríbeme por mensaje directo','Encuéntrame en '+Z()]}],
+tip:'Foto de perfil: tu cara sonriendo o tu producto bien iluminado. La gente le compra a personas.',
+prev:function(v){return'<div class="ph"><div class="top"><span>'+e(v('user','tu.usuario'))+'</span><span>≡</span></div><div class="row"><div class="av ig">'+e(N()[0])+'</div><div class="stats"><div><b>0</b>posts</div><div><b>0</b>seguidores</div><div><b>0</b>seguidos</div></div></div><div class="bio"><b>'+e(N())+'</b><br>'+e(v('b1','¿Qué haces?'))+'<br>'+e(v('b2','¿Dónde y cuándo?'))+'<br><span class="lk">'+e(v('b3','¿Cómo te piden?'))+'</span></div><div class="btns"><span class="a">Seguir</span><span>Mensaje</span></div><div class="gr"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>'},
+out:function(v){return'Usuario: @'+v('user','')+'\nBio: '+v('b1','')+' / '+v('b2','')+' / '+v('b3','')}},
+{t:'Tu primera historia',why:'Las historias duran 24 horas y son para el día a día. No tienen que ser perfectas: tienen que ser reales.',
+f:[{id:'tipo',l:'¿Qué vas a mostrar?',t:'pick',o:['Detrás de cámara · cómo lo hago','Encuesta · pregunto a mis clientes','Antes y después','Disponible hoy']},
+{id:'txt',l:'Texto grande de la historia',t:'text',sug:function(v){var t=v('tipo','');if(t.indexOf('Encuesta')==0)return['¿Cuál prefieres?','¿Te gustaría que lo hiciera en otro color?'];if(t.indexOf('Antes')==0)return['Así llegó… y así quedó','De esto a esto en 1 hora'];if(t.indexOf('Disponible')==0)return['HOY HAY '+P().toUpperCase(),'Quedan pocos, ¡escríbeme!'];return['Así empieza mi día','Mira cómo hago '+P()]}},
+{id:'stk',l:'Sticker (lo que la gente puede tocar)',t:'pick',o:['Encuesta: Sí / No','Caja de preguntas','Enlace a mi WhatsApp','Ubicación: '+Z()]}],
+tip:'Publica de 3 a 5 historias al día. Cuantas más haces, más te recuerda la gente.',
+prev:function(v){var s=v('stk',''),st=s.indexOf('Encuesta')==0?'<div class="stk poll"><span>Sí</span><span>No</span></div>':s?'<div class="stk">'+e(s)+'</div>':'';return'<div class="ph"><div class="story ig"><div class="hd">'+e(slug(N()))+' · ahora</div><div class="t">'+e(v('txt','Escribe el texto de tu historia'))+'</div>'+st+'</div></div>'},
+out:function(v){return'Historia ('+v('tipo','')+'): "'+v('txt','')+'" + sticker '+v('stk','')}},
+{t:'Reel de 15 segundos',why:'Con los reels te descubre gente que todavía no te sigue. Piénsalo en 3 tomas cortas.',
+f:[{id:'r1',l:'Toma 1 · segundos 0 a 3 (el gancho)',t:'area',sug:function(){return['El resultado final, de cerca','Mis manos empezando a trabajar','Pregunta en pantalla: ¿sabías que…?']}},
+{id:'r2',l:'Toma 2 · segundos 3 a 12 (el proceso)',t:'area',sug:function(){return['Cómo hago '+P()+' paso a paso, rápido','Un cliente recibiendo su pedido (con su permiso)']}},
+{id:'r3',l:'Toma 3 · segundos 12 a 15 (el cierre)',t:'area',sug:function(){return['Yo sonriendo con el producto: "Pídelo por WhatsApp"','El producto terminado + precio en pantalla']}}],
+tip:'Graba con el celular vertical, de frente a una ventana para que haya luz, y limpia la cámara con la camiseta antes de empezar.',
+prev:function(v){return'<div class="ph"><div class="top"><span>Guion del reel</span><span>15s</span></div><div class="sb"><div><b>0–3 s</b>'+e(v('r1','Gancho'))+'</div><div><b>3–12 s</b>'+e(v('r2','Proceso'))+'</div><div><b>12–15 s</b>'+e(v('r3','Cierre'))+'</div></div></div>'},
+out:function(v){return'Reel: [0-3s] '+v('r1','')+' | [3-12s] '+v('r2','')+' | [12-15s] '+v('r3','')}},
+{t:'El texto de tu publicación',why:'La gente solo lee la primera línea antes de tocar "más". Esa línea tiene que atrapar.',
+f:[{id:'c1',l:'Primera línea (el gancho)',t:'text',sug:function(){return['¿Buscas '+P()+' en '+Z()+'?','Esto lo hice hoy con mis manos','Lo que nadie te dice de '+P()]}},
+{id:'c2',l:'Cuéntalo en 2 o 3 frases',t:'area',sug:function(){return['Hago '+P()+' para '+Q()+'. Todo hecho por mí, con cuidado y a buen precio. Pide el tuyo por WhatsApp.']}},
+{id:'c3',l:'Hashtags (máximo 5)',t:'text',sug:function(){return['#'+slug(P())+' #'+slug(Z())+' #hechoamano #emprendimiento']}}],
+tip:'Con 3 a 5 hashtags es suficiente. Mejor si son de tu barrio o tu ciudad que los gigantes como #love.',
+prev:function(v){return'<div class="ph post"><div class="row"><div class="av ig" style="width:32px;height:32px;font-size:14px">'+e(N()[0])+'</div><b>'+e(slug(N()))+'</b></div><div class="img">Aquí va tu foto real<br>(luz natural, fondo limpio)</div><div class="cap">♡ ○ ➤<br><b>'+e(slug(N()))+'</b> '+e(v('c1','Primera línea…'))+'<br>'+nl(v('c2',''))+'<br><span class="hash">'+e(v('c3',''))+'</span></div></div>'},
+out:function(v){return'Post: '+v('c1','')+'\n'+v('c2','')+'\n'+v('c3','')}}
+]},
+tt:{n:'TikTok',cls:'tt',col:'#fe2c55',d:'Que te descubra gente nueva con videos cortos y auténticos.',
+reto:['Crea tu cuenta, pon foto y bio corta.','Mira 10 videos de tu tema y anota los ganchos que te atraparon.','Graba y publica tu primer video.','Graba un "un día conmigo".','Responde un comentario con un video.','Publica de nuevo con otro gancho.','Fíjate cuál tuvo más vistas y repite la fórmula.'],
+m:[
+{t:'Elige tu formato',why:'En TikTok no gana el video más bonito, sino el más real. Escoge un formato fácil de grabar con lo que tienes.',
+f:[{id:'fmt',l:'¿Qué tipo de video vas a hacer?',t:'pick',o:['Un día conmigo|Muestras tu rutina de trabajo de principio a fin','Antes y después|El cambio que logras, en segundos','Te enseño algo en 30 segundos|Un truco o consejo de tu oficio','Mi historia en 3 frases|Quién eres y por qué haces lo que haces','Respondo un comentario|Contestas una pregunta real con video']}],
+tip:'Tu historia es tuya. Cuenta solo lo que quieras y cuando te sientas cómodo.',
+prev:function(v){var f=v('fmt','');return f?'<div class="ph"><div class="tk"><div class="ov">Formato: '+e(f.split('|')[0])+'</div><div class="bt">'+e(f.split('|')[1]||'')+'</div></div></div>':'<p class="small">Elige un formato para ver la vista previa.</p>'},
+out:function(v){return'Formato: '+v('fmt','').split('|')[0]}},
+{t:'El gancho de 3 segundos',why:'Si en 3 segundos no le das una razón para quedarse, la persona sigue deslizando. Este texto va grande en la pantalla.',
+f:[{id:'hk',l:'Elige o escribe tu gancho',t:'text',sug:function(){return['Así hago '+P()+' con lo que tengo','Si vives en '+Z()+', mira esto','Nadie te cuenta esto de '+P(),'Empecé de cero. Hoy hago '+P()+'.','3 cosas que debes saber antes de comprar '+P()]}}],
+tip:'Las preguntas, los números ("3 cosas…") y las sorpresas detienen el dedo.',
+prev:function(v){return'<div class="ph"><div class="tk"><div class="ov">'+e(v('hk','Tu gancho aquí'))+'</div><div class="side"><i></i>♥<i></i>💬<i></i>↗</div><div class="bt"><b>@'+e(slug(N()))+'</b></div></div></div>'},
+out:function(v){return'Gancho: "'+v('hk','')+'"'}},
+{t:'Graba con tu celular',why:'No necesitas un celular caro. Necesitas buena luz, buen sonido y un plan.',
+f:[{id:'g1',l:'Toma 1 · el gancho (0 a 3 s)',t:'text',sug:function(){return['Yo mirando a la cámara diciendo el gancho','El resultado final de cerca']}},
+{id:'g2',l:'Toma 2 · lo importante (3 a 25 s)',t:'area',sug:function(){return['Muestro el proceso en 3 pasos rápidos','Cuento por qué empecé con '+P()]}},
+{id:'g3',l:'Toma 3 · el cierre (25 a 30 s)',t:'text',sug:function(){return['"Sígueme para ver más"','"Pide el tuyo, el enlace está en mi perfil"']}},
+{id:'ck',l:'Antes de grabar, revisa:',t:'check',o:['Celular en vertical','Luz de frente (mirando a la ventana)','Lente limpio','Hablo cerca del celular','Sin ruido fuerte atrás']}],
+tip:'Si el celular tiene poca memoria, graba toma por toma y publica directo desde la app.',
+prev:function(v){var c=(v('ck','')||'').split('|').filter(Boolean).length;return'<div class="ph"><div class="top"><span>Guion</span><span>'+c+'/5 listos</span></div><div class="sb"><div><b>0–3 s</b>'+e(v('g1','Gancho'))+'</div><div><b>3–25 s</b>'+e(v('g2','Contenido'))+'</div><div><b>25–30 s</b>'+e(v('g3','Cierre'))+'</div></div></div>'},
+out:function(v){return'Guion: '+v('g1','')+' | '+v('g2','')+' | '+v('g3','')}},
+{t:'Descripción y sonido',why:'La descripción ayuda a que TikTok sepa a quién mostrarle tu video, y el sonido le da el tono.',
+f:[{id:'ds',l:'Descripción corta',t:'text',sug:function(){return[P()+' en '+Z()+' 👇 Pide por WhatsApp','¿Lo sabías? #'+slug(P())+' #'+slug(Z())]}},
+{id:'sn',l:'¿Qué sonido usarás?',t:'pick',o:['Mi propia voz contando|Genera más confianza','Un sonido en tendencia|Búscalo dentro de la app','El sonido real del trabajo|Tijeras, cocina, herramientas…']}],
+tip:'Tu voz real vale oro: la gente siente que te conoce.',
+prev:function(v){return'<div class="ph"><div class="tk"><div class="ov">'+e(R.tt._hk()||'Tu gancho')+'</div><div class="side"><i></i>♥<i></i>💬<i></i>↗</div><div class="bt"><b>@'+e(slug(N()))+'</b><br>'+e(v('ds','Descripción…'))+'<div class="snd">♪ '+e((v('sn','Sonido')).split('|')[0])+'</div></div></div></div>'},
+out:function(v){return'Descripción: '+v('ds','')+'\nSonido: '+v('sn','').split('|')[0]}}
+]},
+fb:{n:'Facebook',cls:'fbk',col:'#1877f2',d:'Vende en tu barrio con grupos y Marketplace.',
+reto:['Únete a 3 grupos de tu zona y lee las reglas.','Preséntate en uno de los grupos.','Publica tu producto en Marketplace.','Responde todos los comentarios el mismo día.','Publica en otro grupo, el día que permitan ventas.','Pídele a un cliente que comente cómo le fue (si quiere).','Mira qué grupo te trajo más mensajes y enfócate ahí.'],
+m:[
+{t:'Encuentra tus grupos',why:'En Facebook, los grupos del barrio son la plaza de mercado digital. Ahí están tus vecinos buscando lo que vendes.',
+f:[{id:'gb',l:'¿Qué vas a buscar en Facebook?',t:'text',sug:function(){return['Compra y venta '+Z(),'Emprendedores '+Z(),'Vecinos de '+Z()]}},
+{id:'gr',l:'Antes de publicar:',t:'check',o:['Leí las reglas del grupo','Sé qué días dejan publicar ventas','Me presento antes de vender','No publico lo mismo en más de 3 grupos al día']}],
+tip:'Publicar mucho en todos los grupos se ve como spam y te pueden sacar. Mejor pocos grupos, y bien.',
+prev:function(v){var q=v('gb','Compra y venta '+Z());return'<div class="ph"><div class="top fbtop"><span>🔍 '+e(q)+'</span></div><div class="row"><div class="av fbk" style="width:40px;height:40px;font-size:15px">G</div><div><b>'+e(q)+'</b><br><span class="small">Grupo público · 12 mil miembros</span></div></div><div class="row"><div class="av fbk" style="width:40px;height:40px;font-size:15px">G</div><div><b>'+e(q)+' (oficial)</b><br><span class="small">Grupo privado · 4 mil miembros</span></div></div><div class="btns"><span class="a">Unirme</span></div></div>'},
+out:function(v){return'Buscar grupos: "'+v('gb','')+'"'}},
+{t:'Publica en Marketplace',why:'Marketplace funciona como una vitrina gratis. La gente busca por palabra y cercanía.',
+f:[{id:'mt',l:'Título (lo que la gente busca)',t:'text',sug:function(){return[P()+' · '+Z(),P()+' hechos a mano']}},
+{id:'mp',l:'Precio',t:'text',ph:'Ej. $15.000'},
+{id:'md',l:'Descripción',t:'area',sug:function(){return['Hago '+P()+' para '+Q()+'. Entrego en '+Z()+'. Escríbeme y te muestro más fotos.']}},
+{id:'me',l:'¿Cómo entregas?',t:'pick',o:['En persona, en un lugar público','Domicilio cerca','Recogen en un punto acordado']}],
+tip:'La primera foto lo es todo: fondo limpio, luz de día y el producto completo.',
+prev:function(v){return'<div class="ph mk"><div class="top fbtop"><span>Marketplace</span></div><div class="post"><div class="img">Tu mejor foto</div></div><div class="pr">'+e(v('mp','$ —'))+'</div><div class="fbp"><b>'+e(v('mt','Título'))+'</b><br><span class="small">'+e(Z())+' · '+e(v('me',''))+'</span><br>'+nl(v('md',''))+'</div><div class="btns"><span class="a">Enviar mensaje</span></div></div>'},
+out:function(v){return'Marketplace: '+v('mt','')+' · '+v('mp','')+'\n'+v('md','')}},
+{t:'Preséntate al grupo',why:'Antes de vender, preséntate. Un vecino que da la cara inspira más confianza que un anuncio.',
+f:[{id:'p1',l:'Saludo y quién eres',t:'area',sug:function(){return['¡Hola, vecinos de '+Z()+'! Soy de '+N()+'.']}},
+{id:'p2',l:'Qué ofreces y para quién',t:'area',sug:function(){return['Hago '+P()+' para '+Q()+'. Todo hecho por mí.']}},
+{id:'p3',l:'Una invitación (sin presión)',t:'text',sug:function(){return['Si les interesa, escríbanme y les muestro fotos.','Cualquier pregunta, la respondo con gusto.']}}],
+tip:'Contar tu historia es opcional. Comparte solo lo que quieras.',
+prev:function(v){return'<div class="ph"><div class="top fbtop"><span>Grupo · '+e(Z())+'</span></div><div class="fbp"><div class="row" style="padding:0 0 8px"><div class="av fbk" style="width:36px;height:36px;font-size:14px">'+e(N()[0])+'</div><div><b>'+e(N())+'</b><br><span class="small">Ahora</span></div></div>'+nl(v('p1',''))+'<br>'+nl(v('p2',''))+'<br>'+e(v('p3',''))+'<div class="rx"><span>👍 Me gusta</span><span>💬 Comentar</span></div></div></div>'},
+out:function(v){return'Presentación: '+v('p1','')+' '+v('p2','')+' '+v('p3','')}},
+{t:'Responde comentarios',why:'Un comentario respondido rápido y en público lo ven todos los del grupo.',
+f:[{id:'qz',l:'Alguien comenta: "¿Precio?" ¿Qué haces?',t:'quiz',o:[['No le respondo; si le interesa, que me escriba.',0,'Se pierde el cliente y los demás ven que no respondes.'],['"¡Hola! Cuesta $___. Te escribo por privado para los detalles 😊"',1,'¡Muy bien! Respondes en público (lo ven todos) y sigues por privado.'],['"Precio por privado."',0,'Mucha gente desconfía cuando se esconde el precio. Mejor ponlo.']]}],
+tip:'Responde el mismo día. Lo ideal es en la primera hora.',
+prev:function(v){var r=v('qz',''),o=R.fb.m[3].f[0].o;return'<div class="ph"><div class="top fbtop"><span>Comentarios</span></div><div style="padding:8px 0"><div class="cm"><b>Vecina</b><br>¿Precio?</div>'+(r!==''?'<div class="cm me"><b>'+e(N())+'</b><br>'+e(o[+r][0].replace(/"/g,''))+'</div>':'')+'</div></div>'},
+out:function(v){return'Responder rápido en público con el precio y seguir por privado.'}}
+]},
+wa:{n:'WhatsApp Business',cls:'wa',col:'#0b8f4a',d:'Atiende, cierra ventas y haz que te vuelvan a comprar.',
+reto:['Instala WhatsApp Business y arma tu perfil.','Activa el mensaje de bienvenida y las respuestas rápidas.','Sube 3 productos al catálogo.','Publica tu estado del día.','Manda tu catálogo a 10 contactos que de verdad lo necesiten.','Comparte en un estado lo que dijo un cliente feliz (con su permiso).','Escríbele a quien te compró para darle las gracias.'],
+m:[
+{t:'Perfil de empresa',why:'WhatsApp Business es gratis, y ahí llegan casi todas las ventas. Tu perfil es tu tarjeta de presentación.',
+f:[{id:'wn',l:'Nombre del negocio',t:'text',sug:function(){return[N()]}},
+{id:'wc',l:'Categoría',t:'pick',o:['Comida y bebidas','Ropa y accesorios','Servicios del hogar','Belleza','Artesanías','Otro']},
+{id:'wd',l:'Descripción',t:'area',sug:function(){return[P()+' para '+Q()+' en '+Z()+'. Hecho por mí, con cuidado.']}},
+{id:'wh',l:'Horario',t:'text',sug:function(){return['Lunes a sábado, 8 a.m. a 6 p.m.','Todos los días, 10 a.m. a 4 p.m.']}}],
+tip:'Desde el mismo celular puedes tener WhatsApp normal y WhatsApp Business con otro número, o pasar tu número a Business.',
+prev:function(v){return'<div class="ph"><div class="top watop"><span>Perfil de empresa</span></div><div style="text-align:center;padding:14px"><div class="av wa" style="margin:auto">'+e((v('wn',N()))[0])+'</div><b style="font-size:16px;display:block;margin-top:6px">'+e(v('wn',N()))+'</b><span class="small">'+e(v('wc','Categoría'))+'</span></div><div class="fbp">'+nl(v('wd','Descripción'))+'<br><br>🕒 '+e(v('wh','Horario'))+'<br>📍 '+e(Z())+'</div><div class="btns"><span class="a" style="background:#0b8f4a">Mensaje</span><span>Catálogo</span></div></div>'},
+out:function(v){return'Perfil: '+v('wn','')+' · '+v('wc','')+'\n'+v('wd','')+'\nHorario: '+v('wh','')}},
+{t:'Bienvenida y respuestas rápidas',why:'Con esto, aunque estés ocupado, el cliente recibe respuesta al instante. Y tú no escribes lo mismo 20 veces.',
+f:[{id:'wb',l:'Mensaje de bienvenida',t:'area',sug:function(){return['¡Hola! Gracias por escribir a '+N()+' 😊 ¿Qué te gustaría saber?']}},
+{id:'rp',l:'Respuesta rápida /precio',t:'area',sug:function(){return[P()+': $___. Entrego en '+Z()+'.']}},
+{id:'rh',l:'Respuesta rápida /horario',t:'text',sug:function(){return['Atiendo de lunes a sábado, de 8 a.m. a 6 p.m.']}}],
+tip:'Se configuran en: Herramientas para la empresa → Mensaje de bienvenida / Respuestas rápidas.',
+prev:function(v){return'<div class="ph"><div class="top watop"><span>'+e(N())+'</span></div><div class="chat"><div class="bub me">Hola, buenas</div><div class="bub">'+nl(v('wb','Tu bienvenida'))+'</div><div class="bub me">¿Cuánto cuesta?</div><div class="bub">'+nl(v('rp','/precio'))+'</div><div class="qr"><span>/precio</span><span>/horario</span></div></div></div>'},
+out:function(v){return'Bienvenida: '+v('wb','')+'\n/precio: '+v('rp','')+'\n/horario: '+v('rh','')}},
+{t:'Arma tu catálogo',why:'El catálogo es tu vitrina dentro de WhatsApp. El cliente ve foto, precio y descripción sin preguntar.',
+f:[{id:'k1',l:'Nombre del producto',t:'text',sug:function(){return[P()]}},
+{id:'k2',l:'Precio',t:'text',ph:'Ej. $10.000'},
+{id:'k3',l:'Descripción corta',t:'area',sug:function(){return['Hecho a mano. Disponible en '+Z()+'. Pregunta por colores o tamaños.']}}],
+tip:'Empieza con 3 productos o servicios. Mejor pocos y bien presentados.',
+prev:function(v){return'<div class="ph"><div class="top watop"><span>Catálogo</span></div><div class="cat"><div class="img"></div><div><b>'+e(v('k1','Producto'))+'</b><br>'+e(v('k2','$ —'))+'<br><span class="small">'+e(v('k3',''))+'</span></div></div><div class="cat" style="opacity:.4"><div class="img"></div><div><b>Producto 2</b><br>$ —</div></div><div class="cat" style="opacity:.4"><div class="img"></div><div><b>Producto 3</b><br>$ —</div></div></div>'},
+out:function(v){return'Catálogo: '+v('k1','')+' · '+v('k2','')+' · '+v('k3','')}},
+{t:'Tu estado del día',why:'Los estados los ven tus contactos todos los días. Es publicidad gratis para gente que ya te conoce.',
+f:[{id:'et',l:'Tipo de estado',t:'pick',o:['Hoy hay…','Cliente feliz (con su permiso)','Así lo hago','Oferta del día']},
+{id:'ex',l:'Texto del estado',t:'text',sug:function(v){var t=v('et','');if(t.indexOf('Cliente')==0)return['"Me encantó, gracias" — un cliente feliz'];if(t.indexOf('Así')==0)return['Así preparo '+P()+' 👇'];if(t.indexOf('Oferta')==0)return['Solo hoy: 2 '+P()+' por $___'];return['HOY HAY '+P().toUpperCase()+' 🔥 Escríbeme']}}],
+tip:'Publica 1 o 2 estados diarios. Que se vea la constancia.',
+prev:function(v){return'<div class="ph"><div class="est">'+e(v('ex','Tu estado'))+'<small>'+e(N())+' · hace un momento</small></div></div>'},
+out:function(v){return'Estado: '+v('ex','')}},
+{t:'Cliente con dudas',why:'Vender también es escuchar. Practica qué responder cuando dudan.',
+f:[{id:'oq',l:'Te escriben: "Uy, está caro." ¿Qué respondes?',t:'quiz',o:[['"Si no lo compras hoy, te vas a arrepentir."',0,'Presionar espanta. La gente compra cuando confía, no cuando la asustan.'],['"Te entiendo. Te cuento qué incluye y cómo lo hago, para que decidas tranquilo."',1,'¡Muy bien! Escuchas la duda y das información real. Así el cliente decide tranquilo y vuelve.'],['"Es lo mejor que vas a encontrar, garantizado."',0,'Si no lo puedes demostrar, no lo prometas. Mejor cuenta qué tiene de bueno de verdad.']]}],
+tip:'Nunca des los códigos que te llegan por mensaje de texto, aunque te digan que son para pagarte.',
+prev:function(v){var r=v('oq',''),o=R.wa.m[4].f[0].o;return'<div class="ph"><div class="top watop"><span>Cliente</span></div><div class="chat"><div class="bub">Hola, me gusta, pero uy, está caro.</div>'+(r!==''?'<div class="bub me">'+e(o[+r][0].replace(/"/g,''))+'</div>'+(+o[+r][1]?'<div class="bub">Ah bueno, cuéntame 🙂</div>':'<div class="bub">Mmm… lo pienso.</div>'):'')+'</div></div>'},
+out:function(v){return'Ante dudas: escuchar y explicar, sin presionar.'}}
+]}
+};
+R.tt._hk=function(){return S.v['tt.1.hk']||''};
+
+/* ============ VISTAS ============ */
+var app=document.getElementById('app');
+function go(view,extra){S.view=view;for(var k in extra)S[k]=extra[k];save();draw();window.scrollTo(0,0)}
+function bar(t,back){return'<div class="bar"><b>'+t+'</b>'+(back?'<button onclick="'+back+'">← Volver</button>':'')+'</div>'}
+
+function home(){return bar('LAB DE REDES')+'<div class="in"><span class="tag">Taller práctico · desde tu celular</span><div class="hero"><h1 style="position:relative;z-index:1">Las redes no venden solas.<br>Tu estrategia, sí.</h1></div><p>Hoy vas a crear contenido real para vender lo que haces. Tú eliges la red y el laboratorio te dice, paso a paso, qué hacer.</p><p class="sub">No necesitas un celular caro ni pagar anuncios. Lo que escribas se queda guardado en tu teléfono.</p><button class="big" onclick="go(\'start\')">Empezar →</button>'+(S.g.prod?'<button class="big l" onclick="go(\'paths\')">Seguir donde iba</button>':'')+'</div>'}
+
+function start(){var f=[['nombre','¿Cómo se llama tu negocio? (o tu nombre)','Ej. Sabores de Rosa',[]],['prod','¿Qué vendes u ofreces?','Ej. empanadas caseras',['comida casera','arreglo de ropa','artesanías','cortes de pelo','limpieza de casas','reparaciones','ropa de segunda']],['quien','¿Quién lo necesita?','Ej. trabajadores del centro',['vecinos del barrio','trabajadores de oficina','mamás y papás','estudiantes','tiendas y negocios']],['zona','¿Dónde estás?','Ej. Kennedy, Bogotá',[]]];
+return bar('Tu punto de partida','go(\'home\')')+'<div class="in"><span class="tag">Antes de elegir red</span><h2>Cuéntanos de ti</h2><p class="sub">Con estas 4 respuestas el laboratorio te va a dar ideas hechas a tu medida.</p>'+f.map(function(x){return'<label>'+x[1]+'</label><input data-g="'+x[0]+'" placeholder="'+x[2]+'" value="'+e(S.g[x[0]]||'')+'">'+(x[3].length?'<div class="chips">'+x[3].map(function(c){return'<button class="chip" data-gc="'+x[0]+'">'+c+'</button>'}).join('')+'</div>':'')}).join('')+'<button class="big" style="margin-top:20px" onclick="go(\'paths\')">Elegir mi red →</button></div>'}
+
+function count(p){var n=0;R[p].m.forEach(function(_,i){if(S.done[p+'.'+i])n++});return n}
+function paths(){return bar('Elige tu camino','go(\'start\')')+'<div class="in"><span class="tag">Elige tu red</span><h2>¿Dónde está la gente que te va a comprar?</h2><p class="sub">No tienes que estar en todas. Empieza por una. Si no sabes cuál, empieza por WhatsApp: ya lo tienes en el celular.</p><div class="cards">'+['wa','fb','ig','tt'].map(function(p){var r=R[p],c=count(p);return'<button class="net '+r.cls+'" onclick="go(\'mis\',{p:\''+p+'\',i:0})"><em>'+c+'/'+r.m.length+' misiones</em><strong>'+r.n+'</strong><span>'+r.d+'</span></button>'}).join('')+'</div><p class="small" style="margin-top:14px">Trabajando para: <b>'+e(N())+'</b> · '+e(P())+'</p></div>'}
+
+function V(p,i){return function(id,d){var x=S.v[p+'.'+i+'.'+id];return(x==null||x==='')?(d==null?'':d):x}}
+function field(p,i,f){var k=p+'.'+i+'.'+f.id,v=S.v[k]||'',h='<label>'+f.l+'</label>';
+if(f.t=='text')h+='<input data-k="'+k+'" placeholder="'+e(f.ph||'Escribe aquí o toca una idea')+'" value="'+e(v)+'">';
+if(f.t=='area')h+='<textarea data-k="'+k+'" placeholder="'+e(f.ph||'Escribe aquí o toca una idea')+'">'+e(v)+'</textarea>';
+if(f.sug)h+='<div class="chips" data-sug="'+k+'" data-f="'+f.id+'">'+chips(p,i,f)+'</div>';
+if(f.t=='pick'||f.t=='check'){var sel=f.t=='check'?v.split('|'):[v];h+='<div class="picks'+(f.t=='check'?' checks':'')+'">'+f.o.map(function(o){var a=o.split('|');return'<button class="'+(sel.indexOf(o)>-1?'on':'')+'" data-'+f.t+'="'+k+'" data-o="'+e(o)+'">'+e(a[0])+(a[1]?'<small>'+e(a[1])+'</small>':'')+'</button>'}).join('')+'</div>'}
+if(f.t=='quiz'){h+='<div class="picks">'+f.o.map(function(o,j){return'<button class="'+(v!==''&&+v==j?'on':'')+'" data-quiz="'+k+'" data-o="'+j+'">'+e(o[0])+'</button>'}).join('')+'</div>';if(v!=='')h+='<div class="fb '+(f.o[+v][1]?'ok':'no')+'">'+e(f.o[+v][2])+'</div>'}
+return h}
+function chips(p,i,f){return'Ideas: '+f.sug(V(p,i)).map(function(s){return'<button class="chip" data-put="'+p+'.'+i+'.'+f.id+'">'+e(s)+'</button>'}).join('')}
+
+function mis(){var p=S.p,i=S.i,r=R[p],m=r.m[i];
+return bar(r.n+' · Misión '+(i+1)+' de '+r.m.length,'go(\'paths\')')+'<div class="in"><div class="dots">'+r.m.map(function(_,j){return'<i class="'+(j==i?'on':S.done[p+'.'+j]?'ok':'')+'"></i>'}).join('')+'</div><span class="tag" style="color:'+r.col+'">Misión '+(i+1)+'</span><h2>'+m.t+'</h2><p class="sub">'+m.why+'</p>'+m.f.map(function(f){return field(p,i,f)}).join('')+'<div class="tip"><b>Truco</b>'+m.tip+'</div><div class="secprev"><span class="tag">Así se vería</span><div id="pv">'+m.prev(V(p,i))+'</div></div><button class="big" onclick="done()">'+(i<r.m.length-1?'Misión cumplida → siguiente':'Ver mi plan completo →')+'</button>'+(i>0?'<button class="big l" onclick="go(\'mis\',{i:'+(i-1)+'})">← Misión anterior</button>':'')+'</div>'}
+function done(){S.done[S.p+'.'+S.i]=1;if(S.i<R[S.p].m.length-1)go('mis',{i:S.i+1});else go('plan')}
+
+function planText(p){var r=R[p],d=['Lu','Ma','Mi','Ju','Vi','Sá','Do'];return'MI PLAN DE '+r.n.toUpperCase()+'\n'+N()+' · '+P()+'\nPara: '+Q()+' · '+Z()+'\n\n'+r.m.map(function(m,i){return(i+1)+'. '+m.t.toUpperCase()+'\n'+m.out(V(p,i))}).join('\n\n')+'\n\nRETO DE 7 DÍAS\n'+r.reto.map(function(x,j){return d[j]+': '+x}).join('\n')}
+function plan(){var p=S.p,r=R[p],t=planText(p),d=['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+return bar('Tu plan de '+r.n,'go(\'paths\')')+'<div class="in"><div class="hero" style="background:'+r.col+';color:#fff"><span class="tag" style="color:#fff">¡Misiones cumplidas!</span><h2 style="position:relative;z-index:1">Tu plan de '+r.n+' está listo</h2></div><h2 style="font-size:20px">Tu reto de 7 días</h2><div class="reto">'+r.reto.map(function(x,j){return'<div><b>'+d[j]+'</b>'+e(x)+'</div>'}).join('')+'</div><h2 style="font-size:20px;margin-top:18px">Todo lo que creaste</h2><div class="plan" id="pt">'+e(t)+'</div><a class="big g" href="https://wa.me/?text='+encodeURIComponent(t)+'">Mandármelo por WhatsApp</a><button class="big" onclick="cp()">Copiar mi plan</button><p class="small" id="cpm"></p><button class="big l" onclick="go(\'paths\')">Probar otra red</button><div class="tip"><b>Cuídate al vender</b>No des tu dirección exacta a desconocidos: encuéntrate en lugares públicos. Nunca compartas los códigos que te llegan por mensaje de texto. Acuerda el pago antes de entregar.</div></div>'}
+function cp(){var t=planText(S.p),m=document.getElementById('cpm');function man(){m.textContent='Mantén presionado el texto del plan para copiarlo.'}try{navigator.clipboard.writeText(t).then(function(){m.textContent='¡Copiado! Pégalo en tus notas o en un chat.'},man)}catch(x){man()}}
+
+var VIEWS={home:home,start:start,paths:paths,mis:mis,plan:plan};
+function draw(){if(!VIEWS[S.view]||((S.view=='mis'||S.view=='plan')&&!R[S.p]))S.view='home';app.innerHTML=VIEWS[S.view]()}
+function refresh(){if(S.view!='mis')return;var m=R[S.p].m[S.i],v=V(S.p,S.i);document.getElementById('pv').innerHTML=m.prev(v);
+m.f.forEach(function(f){if(f.sug){var c=app.querySelector('[data-sug="'+S.p+'.'+S.i+'.'+f.id+'"]');if(c)c.innerHTML=chips(S.p,S.i,f)}})}
+
+app.addEventListener('input',function(ev){var t=ev.target;if(t.dataset.k){S.v[t.dataset.k]=t.value;save();refresh()}if(t.dataset.g){S.g[t.dataset.g]=t.value;save()}});
+app.addEventListener('click',function(ev){var t=ev.target.closest('button');if(!t)return;var d=t.dataset;
+if(d.gc){S.g[d.gc]=t.textContent;save();app.querySelector('[data-g="'+d.gc+'"]').value=t.textContent}
+else if(d.put){S.v[d.put]=t.textContent;save();var x=app.querySelector('[data-k="'+d.put+'"]');if(x)x.value=t.textContent;refresh()}
+else if(d.pick){S.v[d.pick]=d.o;save();var y=window.scrollY;draw();window.scrollTo(0,y)}
+else if(d.check){var a=(S.v[d.check]||'').split('|').filter(Boolean),j=a.indexOf(d.o);if(j>-1)a.splice(j,1);else a.push(d.o);S.v[d.check]=a.join('|');save();var y2=window.scrollY;draw();window.scrollTo(0,y2)}
+else if(d.quiz){S.v[d.quiz]=d.o;save();var y3=window.scrollY;draw();window.scrollTo(0,y3)}});
+draw();
+</script>
+</body>
+</html>
